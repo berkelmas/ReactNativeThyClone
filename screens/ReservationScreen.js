@@ -1,33 +1,94 @@
 import React from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  DatePickerIOS
-} from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import Animated, { Easing } from "react-native-reanimated";
+import { useMemoOne } from "use-memo-one";
 import { Ionicons } from "@expo/vector-icons";
+import CustomDatePicker from "../components/CustomDatePicker";
+import ReservationTop from "../components/ReservationTop";
 
 const ReservationScreen = () => {
   const [startDate, setStartDate] = React.useState(new Date());
-  const [endDate, setEndDate] = React.useState(new Date().getDate() + 1);
-  const handleDateChange = date => {
+  const [endDate, setEndDate] = React.useState(new Date());
+  const handleStartDateChange = date => {
     setStartDate(date);
+  };
+  const handleEndDateChange = date => {
+    setEndDate(date);
+  };
+
+  const { endDateBottom, startDateBottom } = useMemoOne(
+    () => ({
+      endDateBottom: new Animated.Value(-300),
+      startDateBottom: new Animated.Value(-300)
+    }),
+    []
+  );
+
+  const openDatePicker = selection => {
+    if (selection === "end") {
+      Animated.timing(endDateBottom, {
+        toValue: 0,
+        duration: 400,
+        easing: Easing.back()
+      }).start();
+      Animated.timing(startDateBottom, {
+        toValue: -300,
+        duration: 400,
+        easing: Easing.back()
+      }).start();
+    } else if (selection === "start") {
+      Animated.timing(startDateBottom, {
+        toValue: 0,
+        duration: 400,
+        easing: Easing.back()
+      }).start();
+      Animated.timing(endDateBottom, {
+        toValue: -300,
+        duration: 400,
+        easing: Easing.back()
+      }).start();
+    }
+  };
+
+  const closeDatePicker = selection => {
+    if (selection === "end") {
+      Animated.timing(endDateBottom, {
+        toValue: -300,
+        duration: 400,
+        easing: Easing.back()
+      }).start();
+    } else if (selection === "start") {
+      Animated.timing(startDateBottom, {
+        toValue: -300,
+        duration: 400,
+        easing: Easing.back()
+      }).start();
+    }
   };
 
   return (
     <View style={{ ...styles.container }}>
-      <TouchableOpacity>
-        <View>
-          <Text>Start Date</Text>
-        </View>
-      </TouchableOpacity>
-      <DatePickerIOS
-        mode="date"
-        date={startDate}
-        onDateChange={handleDateChange}
+      <ReservationTop
+        openDatePicker={openDatePicker}
+        startDate={startDate}
+        endDate={endDate}
       />
-      <Text>{startDate.toLocaleDateString()}</Text>
+
+      {/* END DATE */}
+      <CustomDatePicker
+        handleClose={closeDatePicker.bind(this, "end")}
+        pos={endDateBottom}
+        startDate={endDate}
+        handleDateChange={handleEndDateChange}
+      />
+
+      {/* START DATE */}
+      <CustomDatePicker
+        handleClose={closeDatePicker.bind(this, "start")}
+        pos={startDateBottom}
+        startDate={startDate}
+        handleDateChange={handleStartDateChange}
+      />
     </View>
   );
 };

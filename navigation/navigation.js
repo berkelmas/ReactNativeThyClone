@@ -44,6 +44,7 @@ const DrawerNavigator = createDrawerNavigator(
     }
   },
   {
+    initialRouteName: "Reservation",
     drawerBackgroundColor: "rgba(255, 255, 255, 0.7)",
     hideStatusBar: true,
     statusBarAnimation: "slide",
