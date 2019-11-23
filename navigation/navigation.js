@@ -8,6 +8,7 @@ import CustomDrawer from "../components/CustomDrawer";
 import HomeScreen from "../screens/HomeScreen";
 import LoginScreen from "../screens/LoginScreen";
 import ReservationScreen from "../screens/ReservationScreen";
+import MapScreen from "../screens/MapScreen";
 
 const HomeNavigator = createStackNavigator(
   {
@@ -34,6 +35,17 @@ const ReservationNavigator = createStackNavigator(
   }
 );
 
+const MapNavigator = createStackNavigator(
+  {
+    HotelMap: {
+      screen: MapScreen
+    }
+  },
+  {
+    initialRouteName: "HotelMap"
+  }
+);
+
 const DrawerNavigator = createDrawerNavigator(
   {
     Home: {
@@ -41,11 +53,14 @@ const DrawerNavigator = createDrawerNavigator(
     },
     Reservation: {
       screen: ReservationNavigator
+    },
+    Map: {
+      screen: MapNavigator
     }
   },
   {
     initialRouteName: "Reservation",
-    drawerBackgroundColor: "rgba(255, 255, 255, 0.7)",
+    drawerBackgroundColor: "rgba(255, 255, 255, 0.85)",
     hideStatusBar: true,
     statusBarAnimation: "slide",
     contentComponent: CustomDrawer,

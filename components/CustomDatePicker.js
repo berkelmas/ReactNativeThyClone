@@ -37,6 +37,7 @@ const CustomDatePicker = props => {
         mode="date"
         date={props.startDate}
         onDateChange={props.handleDateChange}
+        minimumDate={new Date()}
       />
     </Animated.View>
   );
@@ -45,7 +46,8 @@ const CustomDatePicker = props => {
 CustomDatePicker.propTypes = {
   startDate: PropTypes.instanceOf(Date),
   handleDateChange: PropTypes.func,
-  pos: PropTypes.instanceOf(Animated.Value)
+  pos: PropTypes.instanceOf(Animated.Value),
+  minimumDate: PropTypes.instanceOf(Date)
 };
 
 export default CustomDatePicker;

@@ -1,5 +1,11 @@
 import React from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  Dimensions
+} from "react-native";
 import Animated, { Easing } from "react-native-reanimated";
 import { useMemoOne } from "use-memo-one";
 import { Ionicons } from "@expo/vector-icons";
@@ -68,11 +74,46 @@ const ReservationScreen = () => {
 
   return (
     <View style={{ ...styles.container }}>
+      {/* RESERVATION TOP DATE SELECTION */}
       <ReservationTop
         openDatePicker={openDatePicker}
         startDate={startDate}
         endDate={endDate}
       />
+
+      {/* PERSON AREA */}
+      <TouchableOpacity
+        style={{
+          height: 100,
+          width: Dimensions.get("window").width,
+          padding: 10,
+          borderBottomWidth: 0.5,
+          borderBottomColor: "gray"
+        }}
+      >
+        <Text style={{ fontFamily: "Roboto-Light", fontSize: 20 }}>Guests</Text>
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "flex-start",
+            alignItems: "center"
+          }}
+        >
+          <Text
+            style={{
+              fontSize: 45,
+              fontFamily: "Roboto-Light",
+              paddingRight: 8,
+              paddingLeft: 5,
+              color: "#0d47a1"
+            }}
+          >
+            0
+          </Text>
+          <Ionicons name="md-person" size={45} color="#0d47a1" />
+        </View>
+        <View style={{ height: 4, width: 80, backgroundColor: "#0d47a1" }} />
+      </TouchableOpacity>
 
       {/* END DATE */}
       <CustomDatePicker
