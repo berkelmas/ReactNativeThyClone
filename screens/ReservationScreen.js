@@ -4,17 +4,48 @@ import {
   Text,
   StyleSheet,
   TouchableOpacity,
-  Dimensions
+  Dimensions,
+  Animated,
+  Easing,
+  ScrollView
 } from "react-native";
-import Animated, { Easing } from "react-native-reanimated";
 import { useMemoOne } from "use-memo-one";
-import { Ionicons } from "@expo/vector-icons";
+import { Ionicons, AntDesign } from "@expo/vector-icons";
 import CustomDatePicker from "../components/CustomDatePicker";
 import ReservationTop from "../components/ReservationTop";
+import GuestsComponent from "../components/GuestsComponent";
+import RoomType from "../components/RoomType";
 
-const ReservationScreen = () => {
+const ReservationScreen = props => {
   const [startDate, setStartDate] = React.useState(new Date());
   const [endDate, setEndDate] = React.useState(new Date());
+  const [guestVal, setGuestVal] = React.useState({
+    adult: 0,
+    childSmall: 0,
+    childBig: 0,
+    disabled: 0
+  });
+  const [roomVal, setRoomVal] = React.useState({
+    singleRoom: false,
+    familyRoom: false,
+    kingRoom: false
+  });
+
+  const {
+    startDateBottom,
+    endDateBottom,
+    guestHeight,
+    roomHeight
+  } = useMemoOne(
+    () => ({
+      startDateBottom: new Animated.Value(-300),
+      endDateBottom: new Animated.Value(-300),
+      guestHeight: new Animated.Value(0),
+      roomHeight: new Animated.Value(0)
+    }),
+    []
+  );
+
   const handleStartDateChange = date => {
     setStartDate(date);
   };
@@ -22,36 +53,44 @@ const ReservationScreen = () => {
     setEndDate(date);
   };
 
-  const { endDateBottom, startDateBottom } = useMemoOne(
-    () => ({
-      endDateBottom: new Animated.Value(-300),
-      startDateBottom: new Animated.Value(-300)
-    }),
-    []
-  );
+  const paddingBottom = guestHeight.interpolate({
+    inputRange: [0, 400],
+    outputRange: [0, 10]
+  });
+
+  const borderWidth = guestHeight.interpolate({
+    inputRange: [0, 400],
+    outputRange: [0, 0.3]
+  });
+
+  const paddingRoom = roomHeight.interpolate({
+    inputRange: [0, 300],
+    outputRange: [0, 10]
+  });
+
+  const borderRoom = roomHeight.interpolate({
+    inputRange: [0, 300],
+    outputRange: [0, 0.3]
+  });
 
   const openDatePicker = selection => {
     if (selection === "end") {
       Animated.timing(endDateBottom, {
         toValue: 0,
-        duration: 400,
-        easing: Easing.back()
+        duration: 400
       }).start();
       Animated.timing(startDateBottom, {
         toValue: -300,
-        duration: 400,
-        easing: Easing.back()
+        duration: 400
       }).start();
     } else if (selection === "start") {
       Animated.timing(startDateBottom, {
         toValue: 0,
-        duration: 400,
-        easing: Easing.back()
+        duration: 400
       }).start();
       Animated.timing(endDateBottom, {
         toValue: -300,
-        duration: 400,
-        easing: Easing.back()
+        duration: 400
       }).start();
     }
   };
@@ -72,47 +111,69 @@ const ReservationScreen = () => {
     }
   };
 
+  const handleOpenGuest = () => {
+    if (guestHeight._value === 0) {
+      Animated.timing(guestHeight, { toValue: 300 }).start();
+    } else {
+      Animated.timing(guestHeight, { toValue: 0 }).start();
+    }
+  };
+
+  const handleRoomOpen = () => {
+    if (roomHeight._value === 0) {
+      Animated.timing(roomHeight, { toValue: 300 }).start();
+    } else {
+      Animated.timing(roomHeight, { toValue: 0 }).start();
+    }
+  };
+
   return (
     <View style={{ ...styles.container }}>
       {/* RESERVATION TOP DATE SELECTION */}
-      <ReservationTop
-        openDatePicker={openDatePicker}
-        startDate={startDate}
-        endDate={endDate}
-      />
 
-      {/* PERSON AREA */}
+      <ScrollView bounces={false} showsVerticalScrollIndicator={false}>
+        <ReservationTop
+          openDatePicker={openDatePicker}
+          startDate={startDate}
+          endDate={endDate}
+        />
+
+        <GuestsComponent
+          handleOpenGuest={handleOpenGuest}
+          guestHeight={guestHeight}
+          paddingBottom={paddingBottom}
+          setGuestVal={setGuestVal}
+          guestVal={guestVal}
+          borderWidth={borderWidth}
+        />
+
+        {/* ROOM TYPE COMPONENT */}
+        <RoomType
+          handleRoomOpen={handleRoomOpen}
+          roomHeight={roomHeight}
+          paddingRoom={paddingRoom}
+          borderRoom={borderRoom}
+          setRoomVal={setRoomVal}
+          roomVal={roomVal}
+        />
+      </ScrollView>
+
       <TouchableOpacity
+        onPress={() => props.navigation.navigate("ReservationSecond")}
         style={{
-          height: 100,
+          height: 80,
+          backgroundColor: "#3E4551",
           width: Dimensions.get("window").width,
-          padding: 10,
-          borderBottomWidth: 0.5,
-          borderBottomColor: "gray"
+          marginTop: "auto",
+          justifyContent: "center",
+          alignItems: "center"
         }}
       >
-        <Text style={{ fontFamily: "Roboto-Light", fontSize: 20 }}>Guests</Text>
-        <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "flex-start",
-            alignItems: "center"
-          }}
+        <Text
+          style={{ color: "white", fontSize: 25, fontFamily: "Roboto-Light" }}
         >
-          <Text
-            style={{
-              fontSize: 45,
-              fontFamily: "Roboto-Light",
-              paddingRight: 8,
-              paddingLeft: 5,
-              color: "#0d47a1"
-            }}
-          >
-            0
-          </Text>
-          <Ionicons name="md-person" size={45} color="#0d47a1" />
-        </View>
-        <View style={{ height: 4, width: 80, backgroundColor: "#0d47a1" }} />
+          See Deals
+        </Text>
       </TouchableOpacity>
 
       {/* END DATE */}

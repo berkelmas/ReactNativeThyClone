@@ -1,6 +1,7 @@
 import { createStackNavigator } from "react-navigation-stack";
 import { createDrawerNavigator } from "react-navigation-drawer";
 import { createAppContainer } from "react-navigation";
+import { createFluidNavigator } from "react-navigation-fluid-transitions";
 
 import CustomDrawer from "../components/CustomDrawer";
 
@@ -9,6 +10,10 @@ import HomeScreen from "../screens/HomeScreen";
 import LoginScreen from "../screens/LoginScreen";
 import ReservationScreen from "../screens/ReservationScreen";
 import MapScreen from "../screens/MapScreen";
+import CheckinScreen from "../screens/CheckinScreen";
+import CallScreen from "../screens/CallScreen";
+import ReservationSecondScreen from "../screens/ReservationSecondScreen";
+import RoomDetailScreen from "../screens/RoomDetailScreen";
 
 const HomeNavigator = createStackNavigator(
   {
@@ -24,10 +29,27 @@ const HomeNavigator = createStackNavigator(
   }
 );
 
+const CheckinNavigator = createStackNavigator(
+  {
+    Checkin: {
+      screen: CheckinScreen
+    }
+  },
+  {
+    initialRouteName: "Checkin"
+  }
+);
+
 const ReservationNavigator = createStackNavigator(
   {
     Reservation: {
       screen: ReservationScreen
+    },
+    ReservationSecond: {
+      screen: ReservationSecondScreen
+    },
+    RoomDetail: {
+      screen: RoomDetailScreen
     }
   },
   {
@@ -46,6 +68,17 @@ const MapNavigator = createStackNavigator(
   }
 );
 
+const CallNavigator = createStackNavigator(
+  {
+    Call: {
+      screen: CallScreen
+    }
+  },
+  {
+    initialRouteName: "Call"
+  }
+);
+
 const DrawerNavigator = createDrawerNavigator(
   {
     Home: {
@@ -56,6 +89,18 @@ const DrawerNavigator = createDrawerNavigator(
     },
     Map: {
       screen: MapNavigator
+    },
+    Checkin: {
+      screen: CheckinNavigator,
+      navigationOptions: {
+        title: "Check-in"
+      }
+    },
+    Call: {
+      screen: CallNavigator,
+      navigationOptions: {
+        title: "Phone Call"
+      }
     }
   },
   {

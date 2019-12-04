@@ -4,9 +4,9 @@ import {
   TouchableOpacity,
   DatePickerIOS,
   Text,
-  Dimensions
+  Dimensions,
+  Animated
 } from "react-native";
-import Animated from "react-native-reanimated";
 import PropTypes from "prop-types";
 
 const CustomDatePicker = props => {
@@ -14,6 +14,7 @@ const CustomDatePicker = props => {
     <Animated.View
       style={{
         position: "absolute",
+        backgroundColor: "white",
         bottom: props.pos,
         width: (Dimensions.get("window").width * 5) / 6,
         marginLeft: Dimensions.get("window").width / 12,

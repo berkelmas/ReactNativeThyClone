@@ -72,10 +72,10 @@ const styles = StyleSheet.create({
   },
   singleTouchable: {
     height: Dimensions.get("window").height / 6,
-    backgroundColor: "#2e2e2e"
+    backgroundColor: "#3E4551"
   },
   topTextsContainer: {
-    backgroundColor: "#2E2E2E",
+    backgroundColor: "#3E4551",
     width: Dimensions.get("window").width / 2,
     justifyContent: "center",
     height: "100%"
