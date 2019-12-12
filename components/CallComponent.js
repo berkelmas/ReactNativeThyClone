@@ -20,9 +20,12 @@ const CallComponent = props => {
 
 const styles = StyleSheet.create({
   singleContainer: {
-    width: Dimensions.get("window").width,
+    width: Dimensions.get("window").width - 20,
     height: Dimensions.get("window").height / 3,
-    position: "relative"
+    position: "relative",
+    marginTop: 10,
+    borderRadius: 10,
+    overflow: "hidden"
   },
   singleImage: {
     height: "100%",

@@ -7,7 +7,6 @@ import {
   Dimensions,
   Image
 } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
 
 const MapBookSuccessScreen = props => {
   return (
@@ -112,7 +111,7 @@ const MapBookSuccessScreen = props => {
   );
 };
 
-MapBookSuccessScreen.navigationOptions = ({ navigation }) => ({
+MapBookSuccessScreen.navigationOptions = () => ({
   header: null
 });
 

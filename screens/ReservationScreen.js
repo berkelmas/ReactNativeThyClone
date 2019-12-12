@@ -141,18 +141,9 @@ const ReservationScreen = props => {
         }}
       >
         <TouchableOpacity onPress={() => props.navigation.toggleDrawer()}>
-          <Ionicons style={{ marginLeft: 10 }} name="ios-menu" size={32} />
+          <Ionicons style={{ marginLeft: 10 }} name="ios-menu" size={40} />
         </TouchableOpacity>
-        <Text
-          style={{
-            fontSize: 25,
-            fontFamily: "Roboto-Light",
-            marginBottom: 8,
-            marginRight: 5
-          }}
-        >
-          Rooms{" "}
-        </Text>
+
         <View />
       </View>
 
@@ -234,22 +225,6 @@ const ReservationScreen = props => {
     </View>
   );
 };
-
-ReservationScreen.navigationOptions = ({ navigation }) => ({
-  headerTitle: (
-    <Text style={{ fontSize: 25, fontFamily: "Roboto-Light" }}>
-      Reservation
-    </Text>
-  ),
-  headerLeft: (
-    <TouchableOpacity
-      style={{ marginLeft: 15 }}
-      onPress={() => navigation.toggleDrawer()}
-    >
-      <Ionicons name="ios-menu" size={32} />
-    </TouchableOpacity>
-  )
-});
 
 const styles = StyleSheet.create({
   container: {

@@ -2,7 +2,6 @@ import React from "react";
 import {
   View,
   StyleSheet,
-  Image,
   TouchableOpacity,
   TextInput,
   Dimensions,
@@ -15,7 +14,7 @@ import Animated, { Easing } from "react-native-reanimated";
 import { Ionicons } from "@expo/vector-icons";
 import { useMemoOne } from "use-memo-one";
 
-const LoginScreen = () => {
+const LoginScreen = props => {
   const [rememberMeState, setRememberMeState] = React.useState(false);
   const { bottomUsername, bottomPassword } = useMemoOne(
     () => ({
@@ -54,13 +53,18 @@ const LoginScreen = () => {
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <View style={{ ...styles.container }}>
+        <TouchableOpacity
+          style={{ height: 90, justifyContent: "flex-end" }}
+          onPress={() => props.navigation.goBack()}
+        >
+          <Ionicons style={{ marginLeft: 20 }} name="md-arrow-back" size={40} />
+        </TouchableOpacity>
         <View
           style={{
-            height: "100%",
+            flex: 1,
             width: "100%",
-            justifyContent: "center",
             alignItems: "center",
-            marginTop: -80
+            marginTop: 40
           }}
         >
           <View
@@ -141,23 +145,22 @@ const LoginScreen = () => {
             </View>
           </View>
 
-          <TouchableOpacity>
+          <TouchableOpacity style={{ height: 70, marginTop: 80 }}>
             <View
               style={{
                 width: (Dimensions.get("window").width * 4) / 5,
                 height: 70,
-                backgroundColor: "#FF5A5F",
-                marginTop: 80,
+                borderColor: "#FF5A5F",
+                borderWidth: 1,
                 justifyContent: "center",
-                alignItems: "center",
-                borderRadius: 5
+                alignItems: "center"
               }}
             >
               <Text
                 style={{
                   fontSize: 30,
                   fontFamily: "Roboto-Light",
-                  color: "white"
+                  color: "#FF5A5F"
                 }}
               >
                 Sign in
@@ -195,18 +198,18 @@ const LoginScreen = () => {
               style={{
                 width: (Dimensions.get("window").width * 4) / 5,
                 height: 70,
-                backgroundColor: "#484848",
+                borderColor: "#484848",
+                borderWidth: 1,
                 marginTop: 20,
                 justifyContent: "center",
-                alignItems: "center",
-                borderRadius: 5
+                alignItems: "center"
               }}
             >
               <Text
                 style={{
                   fontSize: 30,
                   fontFamily: "Roboto-Light",
-                  color: "white"
+                  color: "#484848"
                 }}
               >
                 Sign up
@@ -219,25 +222,14 @@ const LoginScreen = () => {
   );
 };
 
-LoginScreen.navigationOptions = ({ navigation }) => ({
-  headerTitle: (
-    <Text
-      style={{ fontFamily: "Roboto-Light", fontSize: 25, color: "#484848" }}
-    >
-      Login
-    </Text>
-  ),
-  headerLeft: (
-    <TouchableOpacity onPress={() => navigation.goBack()}>
-      <Ionicons style={{ marginLeft: 10 }} name="md-arrow-back" size={32} />
-    </TouchableOpacity>
-  )
+LoginScreen.navigationOptions = () => ({
+  header: null
 });
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "center"
+    alignItems: "flex-start"
   },
   inputContainer: {
     position: "relative"

@@ -24,18 +24,22 @@ import CheckInSuccessScreen from "../screens/CheckInSuccessScreen";
 import MapBookSuccessScreen from "../screens/MapBookSuccessScreen";
 import AllReservationsScreen from "../screens/AllReservationsScreen";
 import ReservationDetailScreen from "../screens/ReservationDetailScreen";
+import NewHomeScreen from "../screens/NewHomeScreen";
 
 const HomeNavigator = createStackNavigator(
   {
     Home: {
       screen: HomeScreen
     },
+    NewHome: {
+      screen: NewHomeScreen
+    },
     Login: {
       screen: LoginScreen
     }
   },
   {
-    initialRouteName: "Home"
+    initialRouteName: "NewHome"
   }
 );
 
@@ -160,7 +164,7 @@ const DrawerNavigator = createDrawerNavigator(
     }
   },
   {
-    initialRouteName: "AllReservations",
+    initialRouteName: "Home",
     drawerBackgroundColor: "rgba(255, 255, 255, 1)",
     hideStatusBar: true,
     statusBarAnimation: "none",
