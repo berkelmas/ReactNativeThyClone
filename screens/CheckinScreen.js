@@ -81,7 +81,7 @@ const CheckinScreen = props => {
         }}
       >
         <Text style={{ fontFamily: "Roboto-Light", fontSize: 18 }}>
-          I have an existing Reservation
+          I want to checkin with new reservation
         </Text>
         <Switch
           trackColor={{ true: "#FF5A5F", false: "blue" }}
@@ -90,42 +90,39 @@ const CheckinScreen = props => {
         />
       </View>
 
-      {/* EXISTING RESERVATIONS */}
-      {existingReservationState && (
-        <View style={{ paddingHorizontal: 20 }}>
-          <AnimatedTouchable
-            onPress={() =>
-              Animated.timing(reservationBottom, { toValue: 0 }).start()
-            }
+      <View style={{ paddingHorizontal: 20 }}>
+        <AnimatedTouchable
+          onPress={() =>
+            Animated.timing(reservationBottom, { toValue: 0 }).start()
+          }
+          style={{
+            marginTop: 20,
+            borderWidth: 0.5,
+            borderColor: "gray",
+            borderRadius: 10,
+            height: existingReservationInputHeight,
+            opacity: 1,
+            flexDirection: "row",
+            justifyContent: "space-between",
+            alignItems: "center",
+            paddingRight: 6,
+            paddingLeft: 10
+          }}
+        >
+          <Text
             style={{
-              marginTop: 20,
-              borderWidth: 0.5,
-              borderColor: "gray",
-              borderRadius: 10,
-              height: existingReservationInputHeight,
-              opacity: 1,
-              flexDirection: "row",
-              justifyContent: "space-between",
-              alignItems: "center",
-              paddingRight: 6,
-              paddingLeft: 10
+              color: "black",
+              fontFamily: "Roboto-Light",
+              fontSize: 18
             }}
           >
-            <Text
-              style={{
-                color: "black",
-                fontFamily: "Roboto-Light",
-                fontSize: 18
-              }}
-            >
-              {choosenReservation ? choosenReservation : "Please Select One"}
-            </Text>
-            <AntDesign name="down" size={28} color="gray" />
-          </AnimatedTouchable>
-        </View>
-      )}
+            {choosenReservation ? choosenReservation : "Please Select One"}
+          </Text>
+          <AntDesign name="down" size={28} color="gray" />
+        </AnimatedTouchable>
+      </View>
 
-      {!existingReservationState && (
+      {existingReservationState && (
         <ScrollView contentContainerStyle={{ paddingHorizontal: 20 }}>
           <View style={{ marginTop: 20 }}>
             <Text style={{ fontFamily: "Roboto-Light", fontSize: 18 }}>

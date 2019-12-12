@@ -1,7 +1,9 @@
+import React from "react";
 import { createStackNavigator } from "react-navigation-stack";
 import { createDrawerNavigator } from "react-navigation-drawer";
 import { createAppContainer } from "react-navigation";
 import { createFluidNavigator } from "react-navigation-fluid-transitions";
+import { Ionicons, AntDesign, Feather } from "@expo/vector-icons";
 
 import CustomDrawer from "../components/CustomDrawer";
 
@@ -20,6 +22,8 @@ import CreditCardScreen from "../screens/CreditCardScreen";
 import CameraDocumentsScreen from "../screens/CameraDocumentsScreen";
 import CheckInSuccessScreen from "../screens/CheckInSuccessScreen";
 import MapBookSuccessScreen from "../screens/MapBookSuccessScreen";
+import AllReservationsScreen from "../screens/AllReservationsScreen";
+import ReservationDetailScreen from "../screens/ReservationDetailScreen";
 
 const HomeNavigator = createStackNavigator(
   {
@@ -73,18 +77,17 @@ const fluidReservationNavigator = createFluidNavigator({
   }
 });
 
-const ReservationNavigator = createStackNavigator(
+const AllReservationsNavigator = createStackNavigator(
   {
-    StartReservation: {
-      screen: fluidReservationNavigator,
-      navigationOptions: {
-        headerShown: false,
-        gesturesEnabled: false
-      }
+    AllReservations: {
+      screen: AllReservationsScreen
+    },
+    ReservationDetail: {
+      screen: ReservationDetailScreen
     }
   },
   {
-    initialRouteName: "Reservation"
+    initialRouteName: "AllReservations"
   }
 );
 
@@ -117,38 +120,62 @@ const CallNavigator = createStackNavigator(
 const DrawerNavigator = createDrawerNavigator(
   {
     Home: {
-      screen: HomeNavigator
+      screen: HomeNavigator,
+      navigationOptions: {
+        drawerIcon: <AntDesign name="home" size={30} color="#484848" />
+      }
     },
     Reservation: {
-      screen: fluidReservationNavigator
+      screen: fluidReservationNavigator,
+      navigationOptions: {
+        drawerIcon: <AntDesign name="calendar" size={30} color="#484848" />
+      }
+    },
+    AllReservations: {
+      screen: AllReservationsNavigator,
+      navigationOptions: {
+        title: "All Reservations",
+        drawerIcon: <AntDesign name="book" size={30} color="#484848" />
+      }
     },
     Map: {
-      screen: MapNavigator
+      screen: MapNavigator,
+      navigationOptions: {
+        drawerIcon: <AntDesign name="info" size={30} color="#484848" />
+      }
     },
     Checkin: {
       screen: CheckinNavigator,
       navigationOptions: {
-        title: "Check-in"
+        title: "Check-in",
+        drawerIcon: <AntDesign name="check" size={30} color="#484848" />
       }
     },
     Call: {
       screen: CallNavigator,
       navigationOptions: {
-        title: "Phone Call"
+        title: "Phone Call",
+        drawerIcon: <AntDesign name="phone" size={30} color="#484848" />
       }
     }
   },
   {
-    initialRouteName: "Map",
-    drawerBackgroundColor: "rgba(255, 255, 255, 0.85)",
+    initialRouteName: "AllReservations",
+    drawerBackgroundColor: "rgba(255, 255, 255, 1)",
     hideStatusBar: true,
     statusBarAnimation: "none",
     contentComponent: CustomDrawer,
     contentOptions: {
       activeTintColor: "#4B515D",
+      activeBackgroundColor: "#F5F7F9",
       labelStyle: {
-        fontSize: 20,
+        fontSize: 18,
         fontFamily: "Roboto-Light"
+      },
+      iconContainerStyle: {
+        height: 35,
+        width: 30,
+        opacity: 1
       }
     }
   }

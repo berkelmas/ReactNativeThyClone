@@ -248,7 +248,7 @@ const HomeScreen = props => {
 
 HomeScreen.navigationOptions = ({ navigation }) => ({
   headerTitle: (
-    <Image style={{ height: 100, width: 120, resizeMode: "contain" }} />
+    <Text style={{ fontFamily: "Roboto-Light", fontSize: 20 }}>Home</Text>
   ),
   headerLeft: (
     <TouchableOpacity
