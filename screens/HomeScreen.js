@@ -27,7 +27,7 @@ const HomeScreen = props => {
                 marginBottom: 10
               }}
             >
-              Are You A Miles And Miles Member?
+              Are You A Digitarc Club Member?
             </Text>
             <Text
               style={{
@@ -36,7 +36,7 @@ const HomeScreen = props => {
                 fontSize: 18
               }}
             >
-              Join Miles&Miles to take advantage of fantastic benefits like
+              Join Digitarc Club to take advantage of fantastic benefits like
               award tickets and free upgrades.
             </Text>
           </View>
@@ -58,19 +58,23 @@ const HomeScreen = props => {
           style={{ ...styles.bottomButtonsContainer }}
         >
           <TouchableOpacity
+            onPress={() => props.navigation.navigate("Reservation")}
             style={{ ...styles.bottomButton, marginBottom: 10 }}
           >
             <Text
               style={{
                 color: "white",
                 fontFamily: "Roboto-Light",
-                fontSize: 25
+                fontSize: 22
               }}
             >
-              Book A Flight
+              Make Reservation
             </Text>
           </TouchableOpacity>
-          <TouchableOpacity style={{ ...styles.bottomButton }}>
+          <TouchableOpacity
+            onPress={() => props.navigation.navigate("Checkin")}
+            style={{ ...styles.bottomButton }}
+          >
             <Text
               style={{
                 color: "white",
@@ -111,7 +115,7 @@ const HomeScreen = props => {
                 left: 30
               }}
             >
-              Sychelles
+              Beach Suite
             </Text>
             <Text
               style={{
@@ -135,7 +139,7 @@ const HomeScreen = props => {
                 left: 30
               }}
             >
-              All Inclusive, Round Trip
+              All Inclusive, Best Suite
             </Text>
           </View>
           <View style={{ position: "relative" }}>
@@ -244,13 +248,7 @@ const HomeScreen = props => {
 
 HomeScreen.navigationOptions = ({ navigation }) => ({
   headerTitle: (
-    <Image
-      style={{ height: 100, width: 120, resizeMode: "contain" }}
-      source={{
-        uri:
-          "https://www.freepnglogos.com/uploads/turkish-air-lines-logo-png-2.png"
-      }}
-    />
+    <Image style={{ height: 100, width: 120, resizeMode: "contain" }} />
   ),
   headerLeft: (
     <TouchableOpacity
@@ -267,7 +265,7 @@ const styles = StyleSheet.create({
     flex: 1
   },
   topContainer: {
-    backgroundColor: "#2E2E2E",
+    backgroundColor: "#484848",
     flex: 1,
     flexDirection: "row"
   },
@@ -300,9 +298,10 @@ const styles = StyleSheet.create({
   bottomButton: {
     width: 190,
     height: 70,
-    backgroundColor: "red",
+    backgroundColor: "#FF5A5F",
     justifyContent: "center",
-    alignItems: "center"
+    alignItems: "center",
+    borderRadius: 5
   }
 });
 

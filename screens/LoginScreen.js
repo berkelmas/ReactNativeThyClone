@@ -126,7 +126,7 @@ const LoginScreen = () => {
               }}
             >
               <Switch
-                trackColor={{ true: "orangered", false: "blue" }}
+                trackColor={{ true: "#FF5A5F", false: "blue" }}
                 onValueChange={val => setRememberMeState(val)}
                 value={rememberMeState}
               />
@@ -146,10 +146,11 @@ const LoginScreen = () => {
               style={{
                 width: (Dimensions.get("window").width * 4) / 5,
                 height: 70,
-                backgroundColor: "red",
+                backgroundColor: "#FF5A5F",
                 marginTop: 80,
                 justifyContent: "center",
-                alignItems: "center"
+                alignItems: "center",
+                borderRadius: 5
               }}
             >
               <Text
@@ -194,10 +195,11 @@ const LoginScreen = () => {
               style={{
                 width: (Dimensions.get("window").width * 4) / 5,
                 height: 70,
-                backgroundColor: "#2E2E2E",
+                backgroundColor: "#484848",
                 marginTop: 20,
                 justifyContent: "center",
-                alignItems: "center"
+                alignItems: "center",
+                borderRadius: 5
               }}
             >
               <Text
@@ -219,13 +221,11 @@ const LoginScreen = () => {
 
 LoginScreen.navigationOptions = ({ navigation }) => ({
   headerTitle: (
-    <Image
-      style={{ height: 100, width: 120, resizeMode: "contain" }}
-      source={{
-        uri:
-          "https://www.freepnglogos.com/uploads/turkish-air-lines-logo-png-2.png"
-      }}
-    />
+    <Text
+      style={{ fontFamily: "Roboto-Light", fontSize: 25, color: "#484848" }}
+    >
+      Login
+    </Text>
   ),
   headerLeft: (
     <TouchableOpacity onPress={() => navigation.goBack()}>

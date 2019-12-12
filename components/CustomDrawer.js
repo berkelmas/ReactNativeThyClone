@@ -17,13 +17,14 @@ const CustomDrawer = props => {
       }}
     >
       <SafeAreaView style={{ flex: 1 }}>
-        <Image
-          style={{ height: 100, resizeMode: "contain" }}
-          source={{
-            uri:
-              "https://images.hertz.com/partners/360x160_Turkish_logo_July2019.png"
-          }}
-        />
+        <View style={{ padding: 10 }}>
+          <Image
+            style={{ height: 120, resizeMode: "contain" }}
+            source={{
+              uri: "https://digitarc.net/images/digitarc-logo-icon.png"
+            }}
+          />
+        </View>
 
         <DrawerItems {...props} />
       </SafeAreaView>

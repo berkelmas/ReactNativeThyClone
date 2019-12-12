@@ -14,6 +14,12 @@ import CheckinScreen from "../screens/CheckinScreen";
 import CallScreen from "../screens/CallScreen";
 import ReservationSecondScreen from "../screens/ReservationSecondScreen";
 import RoomDetailScreen from "../screens/RoomDetailScreen";
+import ReservationLastDetailsScreen from "../screens/ReservationLastDetailsScreen";
+import PaymentChooseScreen from "../screens/PaymentChooseScreen";
+import CreditCardScreen from "../screens/CreditCardScreen";
+import CameraDocumentsScreen from "../screens/CameraDocumentsScreen";
+import CheckInSuccessScreen from "../screens/CheckInSuccessScreen";
+import MapBookSuccessScreen from "../screens/MapBookSuccessScreen";
 
 const HomeNavigator = createStackNavigator(
   {
@@ -29,10 +35,16 @@ const HomeNavigator = createStackNavigator(
   }
 );
 
-const CheckinNavigator = createStackNavigator(
+const CheckinNavigator = createFluidNavigator(
   {
     Checkin: {
       screen: CheckinScreen
+    },
+    CameraDocuments: {
+      screen: CameraDocumentsScreen
+    },
+    CheckinSuccess: {
+      screen: CheckInSuccessScreen
     }
   },
   {
@@ -40,16 +52,35 @@ const CheckinNavigator = createStackNavigator(
   }
 );
 
+const fluidReservationNavigator = createFluidNavigator({
+  Reservation: {
+    screen: ReservationScreen
+  },
+  ReservationSecond: {
+    screen: ReservationSecondScreen
+  },
+  RoomDetail: {
+    screen: RoomDetailScreen
+  },
+  ReservationLastDetails: {
+    screen: ReservationLastDetailsScreen
+  },
+  PaymentChoose: {
+    screen: PaymentChooseScreen
+  },
+  CreditCard: {
+    screen: CreditCardScreen
+  }
+});
+
 const ReservationNavigator = createStackNavigator(
   {
-    Reservation: {
-      screen: ReservationScreen
-    },
-    ReservationSecond: {
-      screen: ReservationSecondScreen
-    },
-    RoomDetail: {
-      screen: RoomDetailScreen
+    StartReservation: {
+      screen: fluidReservationNavigator,
+      navigationOptions: {
+        headerShown: false,
+        gesturesEnabled: false
+      }
     }
   },
   {
@@ -61,10 +92,14 @@ const MapNavigator = createStackNavigator(
   {
     HotelMap: {
       screen: MapScreen
+    },
+    MapBookSuccess: {
+      screen: MapBookSuccessScreen
     }
   },
   {
-    initialRouteName: "HotelMap"
+    initialRouteName: "HotelMap",
+    mode: "modal"
   }
 );
 
@@ -85,7 +120,7 @@ const DrawerNavigator = createDrawerNavigator(
       screen: HomeNavigator
     },
     Reservation: {
-      screen: ReservationNavigator
+      screen: fluidReservationNavigator
     },
     Map: {
       screen: MapNavigator
@@ -104,10 +139,10 @@ const DrawerNavigator = createDrawerNavigator(
     }
   },
   {
-    initialRouteName: "Reservation",
+    initialRouteName: "Map",
     drawerBackgroundColor: "rgba(255, 255, 255, 0.85)",
     hideStatusBar: true,
-    statusBarAnimation: "slide",
+    statusBarAnimation: "none",
     contentComponent: CustomDrawer,
     contentOptions: {
       activeTintColor: "#4B515D",

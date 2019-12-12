@@ -8,7 +8,9 @@ import {
   Dimensions,
   TouchableOpacity,
   StatusBar,
-  Modal
+  Modal,
+  TouchableWithoutFeedback,
+  Animated
 } from "react-native";
 import MapView, {
   Animated as AnimatedMapView,
@@ -16,25 +18,31 @@ import MapView, {
   Marker
 } from "react-native-maps";
 import { AntDesign, EvilIcons } from "@expo/vector-icons";
+import { useMemoOne } from "use-memo-one";
 import ImageViewer from "react-native-image-zoom-viewer";
 import { descriptions } from "../assets/data/descriptions";
 import { amenities } from "../assets/data/amenities";
-import { TouchableWithoutFeedback } from "react-native-gesture-handler";
+import { Transition } from "react-navigation-fluid-transitions";
 
 let nonStateImages = [];
 
 class RoomDetailScreen extends React.Component {
-  state = {
-    region: new AnimatedRegion({
-      latitude: 37.099399,
-      longitude: 27.493154,
-      latitudeDelta: 0.006,
-      longitudeDelta: 0.008
-    }),
-    images: [],
-    imageIndex: 0,
-    modalVisible: false
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      region: new AnimatedRegion({
+        latitude: 37.099399,
+        longitude: 27.493154,
+        latitudeDelta: 0.006,
+        longitudeDelta: 0.008
+      }),
+      images: [],
+      imageIndex: 0,
+      modalVisible: false,
+      imageHeight: new Animated.Value(Dimensions.get("window").height / 3)
+    };
+  }
+
   componentDidMount() {
     this.setState({ images: this.props.navigation.getParam("item").images });
     let newImages = [];
@@ -49,39 +57,44 @@ class RoomDetailScreen extends React.Component {
       <View style={styles.container}>
         <StatusBar hidden={true} />
         <View style={{ position: "relative" }}>
-          <ScrollView
-            horizontal={true}
-            pagingEnabled={true}
-            showsHorizontalScrollIndicator={false}
-          >
-            {this.state.images.map((img, index) => (
-              <TouchableWithoutFeedback
-                onPress={() => {
-                  this.setState({ imageIndex: index, modalVisible: true });
-                }}
-                key={index}
-                style={{
-                  height: Dimensions.get("window").height / 3,
-                  width: Dimensions.get("window").width
-                }}
-              >
-                <Image
+          <Transition shared={this.props.navigation.getParam("pictureId")}>
+            <ScrollView
+              horizontal={true}
+              pagingEnabled={true}
+              showsHorizontalScrollIndicator={false}
+            >
+              {this.state.images.map((img, index) => (
+                <TouchableWithoutFeedback
+                  onPress={() => {
+                    this.setState({ imageIndex: index, modalVisible: true });
+                  }}
                   key={index}
-                  source={img}
                   style={{
-                    height: Dimensions.get("window").height / 3,
+                    height: this.state.imageHeight,
                     width: Dimensions.get("window").width
                   }}
-                />
-              </TouchableWithoutFeedback>
-            ))}
-          </ScrollView>
+                >
+                  <View>
+                    <Animated.Image
+                      key={index}
+                      source={img}
+                      style={{
+                        height: this.state.imageHeight,
+                        width: Dimensions.get("window").width
+                      }}
+                    />
+                  </View>
+                </TouchableWithoutFeedback>
+              ))}
+            </ScrollView>
+          </Transition>
+
           <TouchableOpacity
-            onPress={() => this.props.navigation.goBack()}
+            onPress={() => this.props.navigation.navigate("ReservationSecond")}
             style={{
-              width: 30,
-              height: 30,
-              borderRadius: 15,
+              width: 50,
+              height: 50,
+              borderRadius: 25,
               backgroundColor: "transparent",
               opacity: 1,
               position: "absolute",
@@ -105,7 +118,21 @@ class RoomDetailScreen extends React.Component {
           </TouchableOpacity>
         </View>
 
-        <ScrollView bounces={false} contentContainerStyle={{ padding: 18 }}>
+        <ScrollView
+          onScroll={e => {
+            const offsetY = e.nativeEvent.contentOffset.y;
+            if (offsetY < 200) {
+              this.state.imageHeight.setValue(
+                Dimensions.get("window").height / 3 - offsetY / 2
+              );
+
+              //console.log(this.state.imageHeight._value);
+            }
+          }}
+          scrollEventThrottle={16}
+          bounces={false}
+          contentContainerStyle={{ padding: 18 }}
+        >
           <Text style={{ fontSize: 30, fontFamily: "Roboto-Light" }}>
             {this.props.navigation.getParam("item").type}
           </Text>
@@ -124,12 +151,20 @@ class RoomDetailScreen extends React.Component {
           </View>
 
           <Text
-            style={{ marginTop: 22, fontFamily: "Roboto-Light", fontSize: 18 }}
+            style={{
+              marginTop: 22,
+              fontFamily: "Roboto-Light",
+              fontSize: 18
+            }}
           >
             Entire Suit hosted by Turkish Airlines.
           </Text>
           <Text
-            style={{ marginTop: 20, fontFamily: "Roboto-Light", fontSize: 18 }}
+            style={{
+              marginTop: 20,
+              fontFamily: "Roboto-Light",
+              fontSize: 18
+            }}
           >
             2 Guests <Text>&#8226;</Text> 1 Bedroom <Text>&#8226;</Text> 1 Bed{" "}
             <Text>&#8226;</Text> 1 Bath{" "}
@@ -296,26 +331,36 @@ class RoomDetailScreen extends React.Component {
             >
               400$ / night
             </Text>
-            <TouchableOpacity
-              onPress={() => this.setState({ modalVisible: true })}
-              style={{
-                backgroundColor: "#FF5A5F",
-                marginBottom: 10,
-                borderRadius: 10,
-                marginRight: 20
-              }}
-            >
-              <Text
+            <Transition shared="button">
+              <TouchableOpacity
+                onPress={() =>
+                  this.props.navigation.navigate("ReservationLastDetails", {
+                    item: this.props.navigation.getParam("item")
+                  })
+                }
                 style={{
-                  fontSize: 22,
-                  fontFamily: "Roboto-Light",
-                  color: "white",
-                  padding: 10
+                  backgroundColor: "#FF5A5F",
+                  marginBottom: 10,
+                  borderRadius: 10,
+                  marginRight: 20,
+                  justifyContent: "center",
+                  alignItems: "center"
                 }}
               >
-                Book
-              </Text>
-            </TouchableOpacity>
+                <Transition shared="text">
+                  <Text
+                    style={{
+                      fontSize: 22,
+                      fontFamily: "Roboto-Light",
+                      color: "white",
+                      padding: 10
+                    }}
+                  >
+                    Book
+                  </Text>
+                </Transition>
+              </TouchableOpacity>
+            </Transition>
           </View>
         </ScrollView>
 

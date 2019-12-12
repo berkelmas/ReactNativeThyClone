@@ -15,6 +15,7 @@ import CustomDatePicker from "../components/CustomDatePicker";
 import ReservationTop from "../components/ReservationTop";
 import GuestsComponent from "../components/GuestsComponent";
 import RoomType from "../components/RoomType";
+import { Transition } from "react-navigation-fluid-transitions";
 
 const ReservationScreen = props => {
   const [startDate, setStartDate] = React.useState(new Date());
@@ -129,8 +130,33 @@ const ReservationScreen = props => {
 
   return (
     <View style={{ ...styles.container }}>
-      {/* RESERVATION TOP DATE SELECTION */}
+      <View
+        style={{
+          height: 90,
+          backgroundColor: "white",
+          width: Dimensions.get("window").width,
+          flexDirection: "row",
+          justifyContent: "space-between",
+          alignItems: "flex-end"
+        }}
+      >
+        <TouchableOpacity onPress={() => props.navigation.toggleDrawer()}>
+          <Ionicons style={{ marginLeft: 10 }} name="ios-menu" size={32} />
+        </TouchableOpacity>
+        <Text
+          style={{
+            fontSize: 25,
+            fontFamily: "Roboto-Light",
+            marginBottom: 8,
+            marginRight: 5
+          }}
+        >
+          Rooms{" "}
+        </Text>
+        <View />
+      </View>
 
+      {/* RESERVATION TOP DATE SELECTION */}
       <ScrollView bounces={false} showsVerticalScrollIndicator={false}>
         <ReservationTop
           openDatePicker={openDatePicker}
@@ -158,23 +184,37 @@ const ReservationScreen = props => {
         />
       </ScrollView>
 
-      <TouchableOpacity
-        onPress={() => props.navigation.navigate("ReservationSecond")}
-        style={{
-          height: 80,
-          backgroundColor: "#3E4551",
-          width: Dimensions.get("window").width,
-          marginTop: "auto",
-          justifyContent: "center",
-          alignItems: "center"
-        }}
-      >
-        <Text
-          style={{ color: "white", fontSize: 25, fontFamily: "Roboto-Light" }}
+      <Transition shared="seedeals">
+        <TouchableOpacity
+          onPress={() => props.navigation.navigate("ReservationSecond")}
+          style={{
+            height: 80,
+            backgroundColor: "white",
+            width: Dimensions.get("window").width,
+            justifyContent: "center",
+            alignItems: "center",
+            shadowColor: "#000",
+            shadowOffset: {
+              width: 0,
+              height: 2
+            },
+            shadowOpacity: 0.25,
+            shadowRadius: 3.84,
+
+            elevation: 5
+          }}
         >
-          See Deals
-        </Text>
-      </TouchableOpacity>
+          <Animated.Text
+            style={{
+              color: "#2E2E2E",
+              fontSize: 25,
+              fontFamily: "Roboto-Light"
+            }}
+          >
+            See Deals
+          </Animated.Text>
+        </TouchableOpacity>
+      </Transition>
 
       {/* END DATE */}
       <CustomDatePicker

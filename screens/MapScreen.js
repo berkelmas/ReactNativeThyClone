@@ -1,14 +1,13 @@
-import React, { useRef } from "react";
+import React from "react";
 import {
-  Button,
   Dimensions,
   Image,
-  Platform,
   ScrollView,
   StyleSheet,
   Text,
   View,
-  TouchableOpacity
+  TouchableOpacity,
+  DatePickerIOS
 } from "react-native";
 import MapView, {
   Animated as AnimatedMapView,
@@ -16,7 +15,7 @@ import MapView, {
   Marker
 } from "react-native-maps";
 import Animated, { Easing } from "react-native-reanimated";
-import { Ionicons } from "@expo/vector-icons";
+import { Ionicons, AntDesign } from "@expo/vector-icons";
 
 export default class MapScreen extends React.Component {
   mapRef;
@@ -33,9 +32,10 @@ export default class MapScreen extends React.Component {
       longitudeDelta: 0.008
     }),
     loading: false,
+    reservationDate: null,
     name: "",
     description:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia dolore delectus repellat aspernatur officia magni a excepturi repellendus, impedit hic aut natus blanditiis id! Nihil, architecto. Reiciendis molestiae repudiandae similique."
+      "Open since 1994, Sunset Grill & Bar today is one of the leading fine dining restaurants in Istanbul. Located on a hilltop below Ulus Park in the upscale neighborhood of Ulus, we offer a spectacular view of the Bosphorus, Bosphorus Bridge and Asian shoreline."
   };
 
   constructor(props) {
@@ -43,6 +43,7 @@ export default class MapScreen extends React.Component {
     this.mapRef = React.createRef();
     this.scrollRef = React.createRef();
     this.transYAnimated = new Animated.Value(400);
+    this.bottomDateAnimated = new Animated.Value(-300);
   }
 
   changeCord(reg) {
@@ -65,7 +66,7 @@ export default class MapScreen extends React.Component {
 
     this.setState({ loading: true });
     setTimeout(() => {
-      this.setState({ name: "berkelmas", loading: false });
+      this.setState({ name: "Sunset Bar", loading: false });
     }, 2000);
   }
 
@@ -161,17 +162,17 @@ export default class MapScreen extends React.Component {
             >
               <ScrollView showsVerticalScrollIndicator={false}>
                 <Image
-                  style={{ height: 200, width: "100%" }}
+                  style={{ height: 180, width: "100%" }}
                   source={{
                     uri:
-                      "https://bocadolobo.com/blog/wp-content/uploads/2017/12/luxury-restaurants-in-Paris-maison-et-objet.jpg"
+                      "https://api.rezervin.com/uploads/MerchantImages/b740e984-94f3-48bd-b157-1233248961b7.jpg"
                   }}
                 />
                 <View style={{ padding: 10 }}>
                   <Text
                     style={{
                       fontSize: 20,
-                      fontFamily: "Roboto-Light"
+                      fontFamily: "Roboto-Medium"
                     }}
                   >
                     {this.state.loading ? (
@@ -180,6 +181,19 @@ export default class MapScreen extends React.Component {
                       this.state.name
                     )}
                   </Text>
+                  <View style={{ flexDirection: "row" }}>
+                    {Array(5)
+                      .fill(0)
+                      .map((item, index) => (
+                        <AntDesign
+                          key={index}
+                          name={index < 3 ? "star" : "staro"}
+                          size={20}
+                          color="#ffbb33"
+                          style={{ padding: 3 }}
+                        />
+                      ))}
+                  </View>
                   <Text style={{ fontSize: 15, fontFamily: "Roboto-Light" }}>
                     {this.state.description}
                   </Text>
@@ -200,21 +214,116 @@ export default class MapScreen extends React.Component {
               }}
             >
               <ScrollView showsVerticalScrollIndicator={false}>
-                <View style={{ padding: 10 }}>
+                <View style={{ padding: 20 }}>
                   <Text
                     style={{
-                      fontSize: 20,
-                      fontFamily: "Roboto-Light"
+                      fontSize: 23,
+                      fontFamily: "Roboto-Medium"
                     }}
                   >
-                    Book Now!
+                    Menu
                   </Text>
-                  <Text style={{ fontSize: 15, fontFamily: "Roboto-Light" }}>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Illum veritatis neque itaque? Quia blanditiis minima,
-                    repellat iusto eos sunt aperiam consectetur, ullam commodi
-                    quis ab, fugit neque adipisci corrupti tempora.\
-                  </Text>
+
+                  {/* FIRST DAY */}
+                  {Array(5)
+                    .fill(0)
+                    .map((res, index) => (
+                      <View key={index}>
+                        <Text
+                          style={{
+                            fontSize: 18,
+                            fontFamily: "Roboto-Light",
+                            paddingVertical: 10,
+                            paddingLeft: 10
+                          }}
+                        >
+                          {index + 1} August 2020
+                        </Text>
+                        <Text
+                          style={{
+                            fontSize: 16,
+                            fontFamily: "Roboto-Medium",
+                            paddingLeft: 20
+                          }}
+                        >
+                          Starter
+                        </Text>
+                        <Text
+                          style={{
+                            fontFamily: "Roboto-Light",
+                            fontSize: 13,
+                            paddingLeft: 30
+                          }}
+                        >
+                          - Turkish Borek
+                        </Text>
+                        <Text
+                          style={{
+                            fontFamily: "Roboto-Light",
+                            fontSize: 13,
+                            paddingLeft: 30
+                          }}
+                        >
+                          - Tea
+                        </Text>
+
+                        <Text
+                          style={{
+                            fontSize: 16,
+                            fontFamily: "Roboto-Medium",
+                            paddingLeft: 20
+                          }}
+                        >
+                          Main Dishes
+                        </Text>
+                        <Text
+                          style={{
+                            fontFamily: "Roboto-Light",
+                            fontSize: 13,
+                            paddingLeft: 30
+                          }}
+                        >
+                          - Turkish Kebab
+                        </Text>
+                        <Text
+                          style={{
+                            fontFamily: "Roboto-Light",
+                            fontSize: 13,
+                            paddingLeft: 30
+                          }}
+                        >
+                          - Salad
+                        </Text>
+
+                        <Text
+                          style={{
+                            fontSize: 16,
+                            fontFamily: "Roboto-Medium",
+                            paddingLeft: 20
+                          }}
+                        >
+                          Desert
+                        </Text>
+                        <Text
+                          style={{
+                            fontFamily: "Roboto-Light",
+                            fontSize: 13,
+                            paddingLeft: 30
+                          }}
+                        >
+                          - Kadayif
+                        </Text>
+                        {/* TINY LINE */}
+                        <View
+                          style={{
+                            width: "100%",
+                            height: 0.4,
+                            backgroundColor: "gray",
+                            marginVertical: 20
+                          }}
+                        />
+                      </View>
+                    ))}
                 </View>
               </ScrollView>
             </View>
@@ -227,11 +336,170 @@ export default class MapScreen extends React.Component {
           >
             <View
               style={{
-                ...styles.singleCard
+                ...styles.singleCard,
+                overflow: "hidden"
+              }}
+            >
+              <View style={{ height: "100%" }}>
+                <View style={{ padding: 15 }}>
+                  <Text style={{ fontFamily: "Roboto-Medium", fontSize: 22 }}>
+                    Book Now
+                  </Text>
+                  <Text style={{ fontFamily: "Roboto-Light", fontSize: 13 }}>
+                    *You can book on the hotel's restaurants from up here.
+                  </Text>
+
+                  <TouchableOpacity
+                    onPress={() =>
+                      Animated.timing(this.bottomDateAnimated, {
+                        toValue: 70,
+                        easing: Easing.linear,
+                        duration: 400
+                      }).start()
+                    }
+                    style={{
+                      borderWidth: 0.4,
+                      borderColor: "gray",
+                      borderRadius: 5,
+                      marginTop: 20,
+                      flexDirection: "row",
+                      justifyContent: "space-between",
+                      alignItems: "center"
+                    }}
+                  >
+                    <Text
+                      style={{
+                        fontFamily: "Roboto-Light",
+                        fontSize: 18,
+                        paddingVertical: 5,
+                        paddingHorizontal: 5
+                      }}
+                    >
+                      {this.state.reservationDate
+                        ? `${this.state.reservationDate.getDate()}/${this.state.reservationDate.getMonth()}/${this.state.reservationDate.getFullYear()}`
+                        : "Please Select A Date"}
+                    </Text>
+                    <AntDesign
+                      name="down"
+                      size={26}
+                      color="gray"
+                      style={{ paddingRight: 5 }}
+                    />
+                  </TouchableOpacity>
+                </View>
+                <View
+                  style={{
+                    marginTop: "auto",
+
+                    flexDirection: "row",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                    borderTopColor: "gray",
+                    borderTopWidth: 0.3,
+
+                    height: 80
+                  }}
+                >
+                  <View
+                    style={{
+                      paddingLeft: 10,
+                      justifyContent: "center"
+                    }}
+                  >
+                    <Text style={{ fontSize: 14, fontFamily: "Roboto-Light" }}>
+                      211 $
+                    </Text>
+                    <Text style={{ fontSize: 14, fontFamily: "Roboto-Light" }}>
+                      2 People Dinner
+                    </Text>
+                    <Text style={{ fontSize: 14, fontFamily: "Roboto-Light" }}>
+                      Price breakdown
+                    </Text>
+                  </View>
+
+                  <TouchableOpacity
+                    onPress={() =>
+                      this.props.navigation.navigate("MapBookSuccess")
+                    }
+                    style={{
+                      paddingHorizontal: 20,
+                      paddingVertical: 10,
+                      backgroundColor: "#FF5A5F",
+                      marginRight: 10,
+                      borderRadius: 5
+                    }}
+                  >
+                    <Text
+                      style={{
+                        color: "white",
+                        fontSize: 18,
+                        fontFamily: "Roboto-Light"
+                      }}
+                    >
+                      Book
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+            </View>
+          </View>
+        </Animated.ScrollView>
+
+        {/* DATE PICKER COMPONENT */}
+        <Animated.View
+          style={{
+            zIndex: 100,
+            position: "absolute",
+            bottom: this.bottomDateAnimated,
+            height: Dimensions.get("window").height / 3,
+            width: Dimensions.get("window").width,
+            backgroundColor: "white"
+          }}
+        >
+          <View
+            style={{
+              zIndex: 200,
+              height: "15%",
+              width: "100%",
+              flexDirection: "row-reverse",
+              alignItems: "center",
+              backgroundColor: "#f5f5f5",
+              borderBottomWidth: 0.5,
+              borderBottomColor: "gray",
+              borderTopWidth: 0.5,
+              borderTopColor: "gray"
+            }}
+          >
+            <TouchableOpacity
+              onPress={() =>
+                Animated.timing(this.bottomDateAnimated, {
+                  toValue: -300,
+                  duration: 400,
+                  easing: Easing.linear
+                }).start()
+              }
+              style={{ padding: 10 }}
+            >
+              <Text style={{ fontSize: 20, fontFamily: "Roboto-Light" }}>
+                Done
+              </Text>
+            </TouchableOpacity>
+          </View>
+
+          <View>
+            <DatePickerIOS
+              mode="date"
+              date={
+                this.state.reservationDate
+                  ? this.state.reservationDate
+                  : new Date()
+              }
+              onDateChange={date => {
+                this.setState({ reservationDate: date });
               }}
             />
           </View>
-        </Animated.ScrollView>
+        </Animated.View>
       </View>
     );
   }
@@ -239,13 +507,7 @@ export default class MapScreen extends React.Component {
 
 MapScreen.navigationOptions = ({ navigation }) => ({
   headerTitle: (
-    <Image
-      style={{ height: 100, width: 120, resizeMode: "contain" }}
-      source={{
-        uri:
-          "https://www.freepnglogos.com/uploads/turkish-air-lines-logo-png-2.png"
-      }}
-    />
+    <Text style={{ fontSize: 20, fontFamily: "Roboto-Light" }}>Hotel Map</Text>
   ),
   headerLeft: (
     <TouchableOpacity
@@ -271,8 +533,8 @@ const styles = StyleSheet.create({
     height: (Dimensions.get("window").height * 2) / 5,
     width: Dimensions.get("window").width,
     position: "absolute",
-    marginBottom: 20,
-    bottom: 0
+
+    bottom: 20
   },
   singleCardContainer: {
     backgroundColor: "transparent",

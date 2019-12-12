@@ -1,5 +1,6 @@
 export const RoomsData = [
   {
+    id: 1,
     type: "King Suite",
     images: [
       {
@@ -14,6 +15,7 @@ export const RoomsData = [
     price: "400$"
   },
   {
+    id: 2,
     type: "Family Suite",
     images: [
       {
@@ -28,6 +30,7 @@ export const RoomsData = [
     price: "343$"
   },
   {
+    id: 3,
     type: "Single Room",
     images: [
       {
@@ -42,6 +45,7 @@ export const RoomsData = [
     price: "203$"
   },
   {
+    id: 4,
     type: "Double Room",
     images: [
       {
