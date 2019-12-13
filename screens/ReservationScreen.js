@@ -16,6 +16,7 @@ import ReservationTop from "../components/ReservationTop";
 import GuestsComponent from "../components/GuestsComponent";
 import RoomType from "../components/RoomType";
 import { Transition } from "react-navigation-fluid-transitions";
+import { Calendar } from "react-native-calendars";
 
 const ReservationScreen = props => {
   const [startDate, setStartDate] = React.useState(new Date());
@@ -30,6 +31,22 @@ const ReservationScreen = props => {
     singleRoom: false,
     familyRoom: false,
     kingRoom: false
+  });
+
+  const [selectedStartDate, setSelectedStartDate] = React.useState({
+    [`${new Date().getFullYear()}-${new Date().getMonth() +
+      1}-${new Date().getDate()}`]: {
+      selected: true,
+      marked: true
+    }
+  });
+
+  const [selectedEndDate, setSelectedEndDate] = React.useState({
+    [`${new Date().getFullYear()}-${new Date().getMonth() +
+      1}-${new Date().getDate()}`]: {
+      selected: true,
+      marked: true
+    }
   });
 
   const {
@@ -76,23 +93,11 @@ const ReservationScreen = props => {
 
   const openDatePicker = selection => {
     if (selection === "end") {
-      Animated.timing(endDateBottom, {
-        toValue: 0,
-        duration: 400
-      }).start();
-      Animated.timing(startDateBottom, {
-        toValue: -300,
-        duration: 400
-      }).start();
+      endDateBottom.setValue(100);
+      startDateBottom.setValue(-300);
     } else if (selection === "start") {
-      Animated.timing(startDateBottom, {
-        toValue: 0,
-        duration: 400
-      }).start();
-      Animated.timing(endDateBottom, {
-        toValue: -300,
-        duration: 400
-      }).start();
+      startDateBottom.setValue(100);
+      endDateBottom.setValue(-300);
     }
   };
 
@@ -207,21 +212,148 @@ const ReservationScreen = props => {
         </TouchableOpacity>
       </Transition>
 
-      {/* END DATE */}
-      <CustomDatePicker
-        handleClose={closeDatePicker.bind(this, "end")}
-        pos={endDateBottom}
-        startDate={endDate}
-        handleDateChange={handleEndDateChange}
-      />
+      {/* START DATE PICKER COMPONENT */}
+      <Animated.View
+        style={{
+          zIndex: 100,
+          position: "absolute",
+          bottom: startDateBottom,
+          height: Dimensions.get("window").height / 3,
+          width: Dimensions.get("window").width,
+          backgroundColor: "white"
+        }}
+      >
+        <View
+          style={{
+            zIndex: 200,
+            height: "15%",
+            width: "100%",
+            flexDirection: "row-reverse",
+            alignItems: "center",
+            backgroundColor: "#F5F8F9",
+            borderBottomWidth: 0.5,
+            borderBottomColor: "gray",
+            borderTopWidth: 0.5,
+            borderTopColor: "gray"
+          }}
+        >
+          <TouchableOpacity
+            onPress={() =>
+              // Animated.timing(birthDateBottom, { toValue: -300 }).start()
+              startDateBottom.setValue(-300)
+            }
+            style={{ padding: 10 }}
+          >
+            <Text
+              style={{
+                fontSize: 20,
+                fontFamily: "Roboto-Light",
+                color: "#FF5A5F"
+              }}
+            >
+              Done
+            </Text>
+          </TouchableOpacity>
+        </View>
 
-      {/* START DATE */}
-      <CustomDatePicker
-        handleClose={closeDatePicker.bind(this, "start")}
-        pos={startDateBottom}
-        startDate={startDate}
-        handleDateChange={handleStartDateChange}
-      />
+        <View style={{ height: "95%" }}>
+          <Calendar
+            // Initially visible month. Default = Date()
+            current={new Date()}
+            // Handler which gets executed on day press. Default = undefined
+            onDayPress={day => {
+              setSelectedStartDate({
+                [day.dateString]: { selected: true, marked: true }
+              });
+              setStartDate(new Date(day.dateString));
+              startDateBottom.setValue(-300);
+            }}
+            // Month format in calendar title. Formatting values: http://arshaw.com/xdate/#Formatting
+            monthFormat={"yyyy MM"}
+            theme={{
+              arrowColor: "#FF5A5F",
+              selectedDayBackgroundColor: "#FF5A5F",
+              textSectionTitleColor: "#FF5A5F",
+              selectedDayTextColor: "white",
+              todayTextColor: "#FF5A5F"
+            }}
+            markedDates={selectedStartDate}
+          />
+          <View
+            style={{ height: 100, width: "100%", backgroundColor: "white" }}
+          />
+        </View>
+      </Animated.View>
+
+      {/* END DATE PICKER COMPONENT */}
+      <Animated.View
+        style={{
+          zIndex: 100,
+          position: "absolute",
+          bottom: endDateBottom,
+          height: Dimensions.get("window").height / 3,
+          width: Dimensions.get("window").width,
+          backgroundColor: "white"
+        }}
+      >
+        <View
+          style={{
+            zIndex: 200,
+            height: "15%",
+            width: "100%",
+            flexDirection: "row-reverse",
+            alignItems: "center",
+            backgroundColor: "#F5F8F9",
+            borderBottomWidth: 0.5,
+            borderBottomColor: "gray",
+            borderTopWidth: 0.5,
+            borderTopColor: "gray"
+          }}
+        >
+          <TouchableOpacity
+            onPress={() =>
+              // Animated.timing(birthDateBottom, { toValue: -300 }).start()
+              endDateBottom.setValue(-300)
+            }
+            style={{ padding: 10 }}
+          >
+            <Text
+              style={{
+                fontSize: 20,
+                fontFamily: "Roboto-Light",
+                color: "#FF5A5F"
+              }}
+            >
+              Done
+            </Text>
+          </TouchableOpacity>
+        </View>
+
+        <View style={{ height: "95%" }}>
+          <Calendar
+            // Initially visible month. Default = Date()
+            current={new Date()}
+            // Handler which gets executed on day press. Default = undefined
+            onDayPress={day => {
+              setEndDate(new Date(day.dateString));
+              endDateBottom.setValue(-300);
+            }}
+            // Month format in calendar title. Formatting values: http://arshaw.com/xdate/#Formatting
+            monthFormat={"yyyy MM"}
+            theme={{
+              arrowColor: "#FF5A5F",
+              selectedDayBackgroundColor: "#FF5A5F",
+              textSectionTitleColor: "#FF5A5F",
+              selectedDayTextColor: "white",
+              todayTextColor: "#FF5A5F"
+            }}
+            markedDates={selectedEndDate}
+          />
+          <View
+            style={{ height: 100, width: "100%", backgroundColor: "white" }}
+          />
+        </View>
+      </Animated.View>
     </View>
   );
 };
