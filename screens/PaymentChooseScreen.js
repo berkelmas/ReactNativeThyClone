@@ -146,6 +146,10 @@ const PaymentChooseScreen = props => {
   );
 };
 
+PaymentChooseScreen.navigationOptions = ({ navigation }) => ({
+  header: null
+});
+
 const styles = StyleSheet.create({
   container: {
     flex: 1

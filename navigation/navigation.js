@@ -25,6 +25,7 @@ import MapBookSuccessScreen from "../screens/MapBookSuccessScreen";
 import AllReservationsScreen from "../screens/AllReservationsScreen";
 import ReservationDetailScreen from "../screens/ReservationDetailScreen";
 import NewHomeScreen from "../screens/NewHomeScreen";
+import PaymentSuccessScreen from "../screens/PaymentSuccessScreen";
 
 const HomeNavigator = createStackNavigator(
   {
@@ -60,7 +61,7 @@ const CheckinNavigator = createFluidNavigator(
   }
 );
 
-const fluidReservationNavigator = createFluidNavigator({
+const fluidReservationNavigator = createStackNavigator({
   Reservation: {
     screen: ReservationScreen
   },
@@ -78,6 +79,9 @@ const fluidReservationNavigator = createFluidNavigator({
   },
   CreditCard: {
     screen: CreditCardScreen
+  },
+  PaymentSuccess: {
+    screen: PaymentSuccessScreen
   }
 });
 

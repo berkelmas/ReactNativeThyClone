@@ -24,20 +24,21 @@ const NewHomeScreen = props => {
         }}
       >
         <TouchableOpacity
-          style={{ marginLeft: 25 }}
+          style={{ marginLeft: 15 }}
           onPress={() => props.navigation.toggleDrawer()}
         >
-          <Ionicons name="ios-menu" size={42} />
+          <Ionicons name="ios-menu" size={42} color="#484848" />
         </TouchableOpacity>
       </View>
 
       {/* MAIN CONTENT */}
-      <ScrollView contentContainerStyle={{ padding: 10 }}>
+      <ScrollView contentContainerStyle={{ padding: 0 }}>
         <Text
           style={{
             fontFamily: "Roboto-Medium",
             fontSize: 25,
-            color: "#484848"
+            color: "#484848",
+            paddingHorizontal: 10
           }}
         >
           What can we help you find?
@@ -50,7 +51,7 @@ const NewHomeScreen = props => {
         >
           {howToHelpData.map((item, index) => (
             <TouchableOpacity
-              onPress={() => props.navigation.navigate("Reservation")}
+              onPress={() => props.navigation.navigate(item.goTo)}
               key={index}
               style={{
                 height: 170,
@@ -107,18 +108,25 @@ const NewHomeScreen = props => {
             fontFamily: "Roboto-Medium",
             fontSize: 25,
             marginTop: 25,
-            color: "#484848"
+            color: "#484848",
+            paddingHorizontal: 10
           }}
         >
           Top Rated Rooms
         </Text>
         <Text
-          style={{ fontFamily: "Roboto-Light", fontSize: 17, paddingTop: 8 }}
+          style={{
+            fontFamily: "Roboto-Light",
+            fontSize: 17,
+            paddingTop: 8,
+            paddingHorizontal: 10
+          }}
         >
           You and your family deserve the best suites for your holiday journey
         </Text>
 
         <ScrollView
+          pagingEnabled={true}
           horizontal={true}
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={{
@@ -131,8 +139,7 @@ const NewHomeScreen = props => {
               key={item.id}
               style={{
                 height: (Dimensions.get("window").height * 5) / 12,
-                width: Dimensions.get("window").width - 40,
-                marginLeft: 10,
+                width: Dimensions.get("window").width,
                 shadowColor: "#000",
                 shadowOffset: {
                   width: 0,
@@ -148,67 +155,73 @@ const NewHomeScreen = props => {
                 style={{
                   height: "100%",
                   width: "100%",
-                  overflow: "hidden",
-                  borderRadius: 10
+                  padding: 10
                 }}
               >
-                <Image
-                  style={{
-                    height: "70%",
-                    resizeMode: "cover"
-                  }}
-                  source={{
-                    uri: item.images[0].uri
-                  }}
-                />
                 <View
                   style={{
-                    height: "30%",
-                    backgroundColor: "white",
-                    padding: 10
+                    borderRadius: 10,
+                    overflow: "hidden"
                   }}
                 >
-                  <Text
+                  <Image
                     style={{
-                      fontFamily: "Roboto-Medium",
-                      fontSize: 20,
-                      color: "#484848"
+                      height: "70%",
+                      resizeMode: "cover"
                     }}
-                  >
-                    {item.type}
-                  </Text>
-                  <View style={{ flexDirection: "row", marginTop: 5 }}>
-                    {Array(5)
-                      .fill(0)
-                      .map((item, index) => (
-                        <AntDesign
-                          key={index}
-                          name={index < 3 ? "star" : "staro"}
-                          size={15}
-                          color="#ffbb33"
-                          style={{ padding: 1 }}
-                        />
-                      ))}
-                  </View>
-                  <TouchableOpacity
+                    source={{
+                      uri: item.images[0].uri
+                    }}
+                  />
+                  <View
                     style={{
-                      flexDirection: "row",
-                      alignItems: "center",
-                      marginTop: "auto",
-                      height: 20
+                      height: "30%",
+                      backgroundColor: "white",
+                      padding: 10
                     }}
                   >
                     <Text
                       style={{
-                        fontFamily: "Roboto-Light",
-                        fontSize: 17,
-                        color: "#00A699"
+                        fontFamily: "Roboto-Medium",
+                        fontSize: 20,
+                        color: "#484848"
                       }}
                     >
-                      Book
+                      {item.type}
                     </Text>
-                    <Entypo name="chevron-right" size={20} color="#00A699" />
-                  </TouchableOpacity>
+                    <View style={{ flexDirection: "row", marginTop: 5 }}>
+                      {Array(5)
+                        .fill(0)
+                        .map((item, index) => (
+                          <AntDesign
+                            key={index}
+                            name={index < 3 ? "star" : "staro"}
+                            size={15}
+                            color="#ffbb33"
+                            style={{ padding: 1 }}
+                          />
+                        ))}
+                    </View>
+                    <TouchableOpacity
+                      style={{
+                        flexDirection: "row",
+                        alignItems: "center",
+                        marginTop: "auto",
+                        height: 20
+                      }}
+                    >
+                      <Text
+                        style={{
+                          fontFamily: "Roboto-Light",
+                          fontSize: 17,
+                          color: "#00A699"
+                        }}
+                      >
+                        Book
+                      </Text>
+                      <Entypo name="chevron-right" size={20} color="#00A699" />
+                    </TouchableOpacity>
+                  </View>
                 </View>
               </View>
             </View>
@@ -219,8 +232,9 @@ const NewHomeScreen = props => {
           onPress={() => props.navigation.navigate("Login")}
           style={{
             height: 60,
-            width: "100%",
+            width: "95%",
             borderColor: "#00A699",
+            marginLeft: 10,
             borderWidth: 1,
             justifyContent: "center",
             alignItems: "center"
@@ -240,8 +254,9 @@ const NewHomeScreen = props => {
         <TouchableOpacity
           style={{
             height: 60,
-            width: "100%",
+            width: "95%",
             borderColor: "#FF5A5F",
+            marginLeft: 10,
             borderWidth: 1,
             justifyContent: "center",
             alignItems: "center",

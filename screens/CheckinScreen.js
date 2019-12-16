@@ -67,11 +67,22 @@ const CheckinScreen = props => {
         }}
       >
         <TouchableOpacity onPress={() => props.navigation.toggleDrawer()}>
-          <Ionicons style={{ marginLeft: 20 }} name="ios-menu" size={40} />
+          <Ionicons style={{ marginLeft: 20 }} name="ios-menu" size={42} />
         </TouchableOpacity>
 
         <View />
       </View>
+
+      <Text
+        style={{
+          fontFamily: "Roboto-Medium",
+          fontSize: 25,
+          paddingHorizontal: 15,
+          paddingVertical: 5
+        }}
+      >
+        Check-in
+      </Text>
       <View
         style={{
           flexDirection: "row",
@@ -116,7 +127,9 @@ const CheckinScreen = props => {
               fontSize: 18
             }}
           >
-            {choosenReservation ? choosenReservation : "Please Select One"}
+            {choosenReservation
+              ? choosenReservation
+              : "Please Select Reservation"}
           </Text>
           <AntDesign name="down" size={28} color="gray" />
         </AnimatedTouchable>
@@ -246,7 +259,13 @@ const CheckinScreen = props => {
             }
             style={{ padding: 10 }}
           >
-            <Text style={{ fontSize: 20, fontFamily: "Roboto-Light" }}>
+            <Text
+              style={{
+                fontSize: 20,
+                fontFamily: "Roboto-Light",
+                color: "#FF5A5F"
+              }}
+            >
               Done
             </Text>
           </TouchableOpacity>
@@ -261,7 +280,7 @@ const CheckinScreen = props => {
             }
             value={choosenReservation}
           >
-            <Picker.Item label="Please Select One" value={null} />
+            <Picker.Item label="Please Select Reservation" value={null} />
             {reservations.map(res => (
               <Picker.Item key={res.key} label={res.label} value={res.value} />
             ))}

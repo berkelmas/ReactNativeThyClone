@@ -507,14 +507,14 @@ export default class MapScreen extends React.Component {
 
 MapScreen.navigationOptions = ({ navigation }) => ({
   headerTitle: (
-    <Text style={{ fontSize: 20, fontFamily: "Roboto-Light" }}>Hotel Map</Text>
+    <Text style={{ fontSize: 23, fontFamily: "Roboto-Light" }}>Hotel Map</Text>
   ),
   headerLeft: (
     <TouchableOpacity
       style={{ marginLeft: 15 }}
       onPress={() => navigation.toggleDrawer()}
     >
-      <Ionicons name="ios-menu" size={32} />
+      <Ionicons name="ios-menu" size={42} />
     </TouchableOpacity>
   )
 });

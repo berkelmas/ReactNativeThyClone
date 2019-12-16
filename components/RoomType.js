@@ -34,10 +34,10 @@ const RoomType = props => {
             justifyContent: "flex-start",
             alignItems: "center",
             marginLeft: 10,
-            paddingRight: 20
+            paddingRight: 0
           }}
         >
-          <Ionicons name="ios-home" size={50} color="#3E4551" />
+          <AntDesign name="home" size={50} color="#3E4551" />
         </View>
       </TouchableOpacity>
 

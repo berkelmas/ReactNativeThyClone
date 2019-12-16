@@ -14,13 +14,13 @@ const ReservationTop = props => {
       <TouchableOpacity
         onPress={props.openDatePicker.bind(this, "start")}
         style={{
-          ...styles.singleTouchable,
-          borderRightColor: "#f7f7f7",
-          borderRightWidth: 0.5
+          ...styles.singleTouchable
         }}
       >
         <View style={styles.topTextsContainer}>
-          <Text style={styles.directionText}>Check-in</Text>
+          <Text style={{ ...styles.directionText, paddingLeft: 10 }}>
+            Check-in
+          </Text>
           <View style={styles.secondTextsContainer}>
             <Text style={styles.dayTextContainer}>
               {props.startDate.getUTCDate()}
@@ -39,13 +39,37 @@ const ReservationTop = props => {
         </View>
       </TouchableOpacity>
 
+      <View
+        style={{
+          width: 1,
+          height: "100%",
+          backgroundColor: "#00A699",
+          zIndex: 1000,
+          transform: [{ rotate: "25deg" }]
+        }}
+      ></View>
+
       <TouchableOpacity
         onPress={props.openDatePicker.bind(this, "end")}
         style={styles.singleTouchable}
       >
         <View style={styles.topTextsContainer}>
-          <Text style={styles.directionText}>Check-out</Text>
-          <View style={styles.secondTextsContainer}>
+          <Text
+            style={{
+              ...styles.directionText,
+              textAlign: "right",
+              paddingRight: 10
+            }}
+          >
+            Check-out
+          </Text>
+          <View
+            style={{
+              ...styles.secondTextsContainer,
+              justifyContent: "flex-end",
+              paddingRight: 10
+            }}
+          >
             <Text style={styles.dayTextContainer}>
               {props.endDate.getUTCDate()}
             </Text>
@@ -75,38 +99,35 @@ const styles = StyleSheet.create({
     backgroundColor: "#3E4551"
   },
   topTextsContainer: {
-    backgroundColor: "#3E4551",
+    backgroundColor: "white",
     width: Dimensions.get("window").width / 2,
-    justifyContent: "center",
     height: "100%"
   },
   directionText: {
-    color: "#f7f7f7",
+    color: "#00A699",
     fontSize: 20,
     fontFamily: "Roboto-Light",
-    paddingLeft: 23,
     marginTop: 20
   },
   secondTextsContainer: {
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "center",
     marginTop: -10
   },
   dayTextContainer: {
     fontFamily: "Roboto-Light",
-    fontSize: 85,
-    color: "white"
+    fontSize: 75,
+    color: "#484848"
   },
   monthTextContainer: {
-    color: "white",
+    color: "#484848",
     fontFamily: "Roboto-Light",
-    fontSize: 40
+    fontSize: 30
   },
   yearTextContainer: {
-    color: "white",
+    color: "#484848",
     fontFamily: "Roboto-Light",
-    fontSize: 25
+    fontSize: 20
   }
 });
 

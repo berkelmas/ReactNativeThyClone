@@ -146,11 +146,27 @@ const ReservationScreen = props => {
         }}
       >
         <TouchableOpacity onPress={() => props.navigation.toggleDrawer()}>
-          <Ionicons style={{ marginLeft: 10 }} name="ios-menu" size={40} />
+          <Ionicons
+            style={{ marginLeft: 10 }}
+            name="ios-menu"
+            size={42}
+            color="#484848"
+          />
         </TouchableOpacity>
 
         <View />
       </View>
+
+      <Text
+        style={{
+          fontSize: 25,
+          fontFamily: "Roboto-Medium",
+          padding: 10,
+          color: "#484848"
+        }}
+      >
+        New Reservation
+      </Text>
 
       {/* RESERVATION TOP DATE SELECTION */}
       <ScrollView bounces={false} showsVerticalScrollIndicator={false}>
@@ -180,37 +196,35 @@ const ReservationScreen = props => {
         />
       </ScrollView>
 
-      <Transition shared="seedeals">
-        <TouchableOpacity
-          onPress={() => props.navigation.navigate("ReservationSecond")}
-          style={{
-            height: 80,
-            backgroundColor: "white",
-            width: Dimensions.get("window").width,
-            justifyContent: "center",
-            alignItems: "center",
-            shadowColor: "#000",
-            shadowOffset: {
-              width: 0,
-              height: 2
-            },
-            shadowOpacity: 0.25,
-            shadowRadius: 3.84,
+      <TouchableOpacity
+        onPress={() => props.navigation.navigate("ReservationSecond")}
+        style={{
+          height: 80,
+          backgroundColor: "#FF5A5F",
+          width: Dimensions.get("window").width,
+          justifyContent: "center",
+          alignItems: "center",
+          shadowColor: "#000",
+          shadowOffset: {
+            width: 0,
+            height: 2
+          },
+          shadowOpacity: 0.25,
+          shadowRadius: 3.84,
 
-            elevation: 5
+          elevation: 5
+        }}
+      >
+        <Animated.Text
+          style={{
+            color: "white",
+            fontSize: 25,
+            fontFamily: "Roboto-Light"
           }}
         >
-          <Animated.Text
-            style={{
-              color: "#2E2E2E",
-              fontSize: 25,
-              fontFamily: "Roboto-Light"
-            }}
-          >
-            See Deals
-          </Animated.Text>
-        </TouchableOpacity>
-      </Transition>
+          See Deals
+        </Animated.Text>
+      </TouchableOpacity>
 
       {/* START DATE PICKER COMPONENT */}
       <Animated.View
@@ -357,6 +371,10 @@ const ReservationScreen = props => {
     </View>
   );
 };
+
+ReservationScreen.navigationOptions = ({ navigation }) => ({
+  header: null
+});
 
 const styles = StyleSheet.create({
   container: {

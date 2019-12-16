@@ -20,10 +20,13 @@ const GuestsComponent = props => {
           width: Dimensions.get("window").width,
           padding: 10,
           borderBottomWidth: 0.5,
-          borderBottomColor: "gray"
+          borderBottomColor: "gray",
+          flexDirection: "row",
+          justifyContent: "space-between",
+          alignItems: "center"
         }}
       >
-        <Text style={{ fontFamily: "Roboto-Light", fontSize: 20 }}>Guests</Text>
+        <Text style={{ fontFamily: "Roboto-Light", fontSize: 26 }}>Guests</Text>
         <View
           style={{
             flexDirection: "row",
@@ -35,7 +38,7 @@ const GuestsComponent = props => {
             style={{
               fontSize: 45,
               fontFamily: "Roboto-Light",
-              paddingRight: 8,
+              paddingRight: 4,
               paddingLeft: 5,
               color: "#3E4551"
             }}
@@ -45,9 +48,8 @@ const GuestsComponent = props => {
               0
             )}
           </Text>
-          <Ionicons name="md-person" size={45} color="#3E4551" />
+          <AntDesign name="user" size={45} color="#3E4551" />
         </View>
-        <View style={{ height: 4, width: 80, backgroundColor: "#3E4551" }} />
       </TouchableOpacity>
 
       <Animated.View
